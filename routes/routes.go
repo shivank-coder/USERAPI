@@ -13,6 +13,8 @@ func SetUpRouter() *gin.Engine {
 	r.GET("/user/:id", controllers.GetUserById)
 	r.DELETE("/user/:id", controllers.DeleteById)
 	r.GET("/orders", controllers.GetOrders)
+	r.GET("order/:id", controllers.OrderById)
+	r.POST("/createorder", controllers.CreateOrder)
 	return r
 
 }
