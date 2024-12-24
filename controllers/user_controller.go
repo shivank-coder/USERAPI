@@ -75,3 +75,37 @@ func GetUserById(c *gin.Context) {
 
 	c.JSON(http.StatusOK, user)
 }
+
+// delete user by its id
+func DeleteById(c *gin.Context) {
+	Id := c.Param("id")
+
+	// Check for related orders
+	var count int
+	err := database.DB.QueryRow(context.Background(), "SELECT COUNT(*) FROM orders WHERE user_id=$1", Id).Scan(&count)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to check related orders"})
+		return
+	}
+	//means altleast some orders are connected with orders id
+	if count > 0 {
+		c.JSON(http.StatusConflict, gin.H{"error": "cannot delete user with associated orders"})
+		return
+	}
+
+	// Proceed with deletion
+	smt := "DELETE from users where id=$1"
+	result, err := database.DB.Exec(context.Background(), smt, Id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "error while deleting the user"})
+		return
+	}
+	//check if there is rows effected or not by this operation
+	rowsAffected := result.RowsAffected()
+	if rowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "no user found with the given id"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "user deleted successfully", "rows_affected": rowsAffected})
+}
