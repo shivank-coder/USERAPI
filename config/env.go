@@ -7,6 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// for loading the env file
 func LoadEnv() {
 	err := godotenv.Load()
 	if err != nil {
@@ -15,6 +16,7 @@ func LoadEnv() {
 	}
 }
 
+// fatching the keys from .env file by using function os.Getenv file
 func GetEnv(key string) string {
 	return os.Getenv(key)
 }

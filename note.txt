@@ -1,0 +1,11 @@
+1 first we will create a .env file where we will provide  our database information like db_name ,db_user,db_hostname,db_password somthing like that 
+
+2 we will create a folder name config where we will create a file name env.go where we will create two functions for loadig the env file using godotenv library and one function for gettig the database creadetionls present in .env file for that we need to use os.Getenv ()function  we will call this from database creation function where we have requirement of these things
+
+
+3 now we will create a folder name database and one file name DB.go  here we will create a function for database connection in this we need to create a instance of database ie DB*pgx.conn which will help us to intract with database and we will create a connection string there for making connection with database 
+
+4  now we will crate a routes folder for our routers here we will create a file routes.go for diffrent kind of router using gin library need to create a intance of gin then we will call diffrent http request like GET,DELETE,POST 
+
+
+5 controller for actual logic which we want to perform on specific router 

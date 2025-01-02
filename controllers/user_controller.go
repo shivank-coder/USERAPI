@@ -14,6 +14,7 @@ import (
 
 func GetUsers(c *gin.Context) {
 	rows, err := database.DB.Query(context.Background(), "SELECT id, name, email, created_at FROM users")
+
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 

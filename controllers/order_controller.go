@@ -19,6 +19,8 @@ func GetOrders(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to fetch orders"})
 		return
 	}
+
+	//infinite processing will be end from here
 	defer rows.Close()
 
 	var orders []models.Order

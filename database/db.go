@@ -9,6 +9,7 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
+// creating a database instance
 var DB *pgx.Conn
 
 func Connect() {
@@ -17,7 +18,7 @@ func Connect() {
 	dbPassword := config.GetEnv("DB_PASSWORD")
 	dbName := config.GetEnv("DB_NAME")
 	dbPort := config.GetEnv("DB_PORT")
-
+	//create a connection string
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", dbHost, dbUser, dbPassword, dbName, dbPort)
 	var err error
 	DB, err = pgx.Connect(context.Background(), dsn)
